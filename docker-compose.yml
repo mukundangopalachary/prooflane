@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: prooflane_postgres
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      # We create multiple DBs in init script usually, but for now just one main db
+      POSTGRES_DB: prooflane
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/init-dbs.sql:/docker-entrypoint-initdb.d/init-dbs.sql
+    networks:
+      - prooflane_network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: prooflane_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - prooflane_network
+    restart: unless-stopped
+
+networks:
+  prooflane_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
