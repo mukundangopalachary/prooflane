@@ -1,78 +1,58 @@
-# Prooflane
+<div align="center">
+  <img src="https://raw.githubusercontent.com/mukundangopalachary/prooflane/main/frontend/public/globe.svg" width="100" alt="Prooflane Logo" />
+  <h1>Prooflane</h1>
+  <p><b>The trust layer for technical hiring.</b></p>
+</div>
 
-Prooflane is a platform for practical engineering skill validation. It uses a microservice architecture built with Next.js and Spring Boot.
+<br />
 
-## Prerequisites
+Prooflane is a comprehensive engineering skill ecosystem focused on practical engineering readiness. We bridge the gap between learning, practice, and trusted hiring signals by measuring real-world engineering readiness beyond resumes and puzzle-based interviews.
 
-Before you begin, ensure you have the following installed on your machine:
-- [Docker](https://docs.docker.com/engine/install/) and Docker Compose
-- [Node.js](https://nodejs.org/) (v20+)
-- [Java Development Kit (JDK) 21](https://adoptium.net/temurin/releases/?version=21)
+## 🎯 The Problem
 
-## Local Development Setup
+Current hiring systems are inefficient and noisy. Resumes are often inflated, DSA (Data Structures and Algorithms) rounds miss day-to-day engineering ability, and recruiters lack the time for deep screening. This leads to strong candidates being filtered out unfairly and companies making costly bad hires. 
 
-Follow these steps to run the entire Prooflane stack locally.
+At the same time, engineers lack structured platforms for practicing real-world engineering skills like debugging, system design, and code review.
 
-### 1. Start Infrastructure (Databases)
+## 💡 The Solution
 
-We use Docker Compose to run PostgreSQL and Redis locally.
+Prooflane solves this by operating in two major modes:
 
-```bash
-# From the root of the project
-docker compose up -d
-```
+### 1. Assessment Mode (Company-Controlled)
+A recruiter-controlled environment focused on evaluating candidates through realistic, trusted assessments. 
+- **Modules include:** Log Debugging, SQL Reasoning, and Code Review.
+- **Benefits:** Provides job-relevant skill signals to recruiters and prevents cheating through strict telemetry.
 
-This spins up:
-- **PostgreSQL** on port `5432` with pre-created databases: `prooflane_users` and `prooflane_assessments`.
-- **Redis** on port `6379`.
+### 2. Problems Mode (Public Platform)
+A public engineering problem practice system (similar to LeetCode, but for real-world engineering).
+- **Features:** Self-paced practice on production log analysis, incident simulations, and API design micro-challenges.
+- **Benefits:** Allows engineers to build practical skills, track progress, and showcase verified capabilities.
 
-*To stop the databases later, run `docker compose down`.*
+## 🏗️ Architecture & Tech Stack
 
-### 2. Start the Backend Microservices
-
-Each backend service is an independent Spring Boot application. We use the Maven Wrapper (`mvnw`), so you don't need to install Maven globally.
-
-Open a terminal and start the **API Gateway**:
-```bash
-cd backend/gateway
-./mvnw spring-boot:run
-```
-*(The Gateway will run on `http://localhost:8080`)*
-
-Open another terminal and start the **User Service**:
-```bash
-cd backend/user-service
-./mvnw spring-boot:run
-```
-*(The User Service will run on `http://localhost:8081`)*
-
-### 3. Start the Frontend
-
-The frontend is a Next.js application using Tailwind CSS and shadcn/ui.
-
-Open a new terminal and run:
-```bash
-cd frontend
-npm install
-npm run dev
-```
-*(The frontend will run on `http://localhost:3000`)*
-
----
-
-## Running Automated Tests
-
-Our CI pipeline enforces these tests. You can run them locally as follows:
+Prooflane is built on a modern, highly scalable microservices architecture.
 
 ### Frontend
-```bash
-cd frontend
-npm run lint
-```
+- **Framework:** Next.js 15 (App Router, TypeScript)
+- **Styling:** Tailwind CSS v4, shadcn/ui
+- **State Management:** TanStack Query (React Query)
 
-### Backend (Integration/Unit Tests)
-We use **Testcontainers** for integration testing. **You must have Docker running** on your machine for these tests to pass, as it will automatically spin up real PostgreSQL and Redis containers for the tests.
-```bash
-cd backend/user-service
-./mvnw test
-```
+### Backend
+- **Core:** Spring Boot 3.5.x (Java 21)
+- **API Gateway:** Spring Cloud Gateway
+- **Data Persistence:** PostgreSQL (Relational Data), Redis (Cache & Sessions)
+- **Migrations:** Flyway
+
+### Infrastructure & DevOps
+- **Containerization:** Docker & Docker Compose
+- **CI/CD:** GitHub Actions (with Testcontainers for robust integration testing)
+
+## 🚀 Getting Started
+
+If you are a developer looking to contribute or run the project locally, please refer to our setup guide:
+
+👉 **[View Local Development Setup Guide](docs/setup.md)**
+
+## 🛡️ License
+
+All rights reserved. Prooflane 2026.
